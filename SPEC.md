@@ -158,65 +158,41 @@ For every venue/site, document these before writing a scraper against it:
   - The site indexes public event info, not alcohol sales — low regulatory risk, but keep marketing language factual/neutral rather than promotional ("Live music at X" not "Get wasted at X")
   - No targeting or design choices aimed at minors; this is a general-audience local information site, which keeps it outside COPPA/alcohol-marketing scrutiny
 
-## 6\. Data Model
+## 6. Data Model
 
+```
 venues
-
-\- venue\_id (UUID, PK)
-
-\- name
-
-\- town
-
-\- region (coastal | western\_sussex)
-
-\- address
-
-\- source\_type (static\_html | json\_endpoint | manual)
-
-\- source\_url
-
-\- link\_status (active | broken | flagged)
-
-\- last\_checked\_at
+- venue_id (UUID, PK)
+- name
+- town
+- region (coastal | western_sussex)
+- address
+- source_type (static_html | json_endpoint | manual)
+- source_url
+- link_status (active | broken | flagged)
+- last_checked_at
 
 events
+- event_id (UUID, PK)
+- venue_id (FK)
+- title
+- event_date
+- start_time
+- category (live_music | dj | karaoke | trivia | happy_hour | community)
+- cover_charge (nullable numeric)
+- summary (≤2 sentences, factual, written/edited by scraper+human review — never copied verbatim)
+- source_url
+- recurrence_rule (nullable)
+- last_verified_at
+- status (published | pending_review | hidden)
 
-\- event\_id (UUID, PK)
-
-\- venue\_id (FK)
-
-\- title
-
-\- event\_date
-
-\- start\_time
-
-\- category (live\_music | dj | karaoke | trivia | happy\_hour | community)
-
-\- cover\_charge (nullable numeric)
-
-\- summary (≤2 sentences, factual, written/edited by scraper+human review — never copied verbatim)
-
-\- source\_url
-
-\- recurrence\_rule (nullable)
-
-\- last\_verified\_at
-
-\- status (published | pending\_review | hidden)
-
-analytics\_events (Phase 1, anonymous)
-
-\- id
-
-\- event\_id (FK, nullable)
-
-\- venue\_id (FK, nullable)
-
-\- event\_type (page\_view | outbound\_click)
-
-\- occurred\_at
+analytics_events (Phase 1, anonymous)
+- id
+- event_id (FK, nullable)
+- venue_id (FK, nullable)
+- event_type (page_view | outbound_click)
+- occurred_at
+```
 
 ## 7\. Technical Architecture (MVP)
 
