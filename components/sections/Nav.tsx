@@ -3,13 +3,16 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { Region } from "@/lib/types";
 
-export function Nav({ region }: { region: Region }) {
+export function Nav({ region }: { region?: Region }) {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-        <span className="text-sm font-semibold tracking-wide text-text-primary">
+        <Link
+          href="/"
+          className="text-sm font-semibold tracking-wide text-text-primary"
+        >
           Sussex Nightlife
-        </span>
+        </Link>
 
         <nav
           aria-label="Region"

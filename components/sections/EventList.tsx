@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -62,6 +63,12 @@ export function EventList({
                   Source: {venue?.name ?? "venue"}
                   <ExternalLink aria-hidden className="size-3" />
                 </a>
+                <Link
+                  href={`/report?event=${encodeURIComponent(event.title)}`}
+                  className="text-xs text-text-faint underline underline-offset-2 hover:text-text-primary"
+                >
+                  Report incorrect info
+                </Link>
               </div>
             </li>
           );

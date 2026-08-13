@@ -1,7 +1,9 @@
-// FR-5 disclaimer + FR-8 Denkore attribution. Low-key by design — no glow,
-// no accent border, ordinary muted text. FR-8's optional About/Contact CTA
-// and §5.3's "Report incorrect info" / last_verified_at display are skipped
-// here: no About/Contact or event-detail page exists yet in this pass.
+import Link from "next/link";
+
+// FR-5 disclaimer + FR-8 Denkore attribution, plus links to the compliance
+// pages (§5.5 Privacy Policy / Terms of Use, §5.4 takedown). Low-key by
+// design — no glow, no accent border, ordinary muted text. FR-8's optional
+// About/Contact CTA is skipped — no About/Contact page exists yet.
 export function Footer() {
   return (
     <footer className="border-t border-border py-8">
@@ -10,6 +12,17 @@ export function Footer() {
           Event details are sourced from public venue postings. All events
           are subject to change — verify with the venue before attending.
         </p>
+        <nav aria-label="Legal" className="flex gap-4">
+          <Link href="/privacy" className="hover:text-text-primary">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="hover:text-text-primary">
+            Terms of Use
+          </Link>
+          <Link href="/report" className="hover:text-text-primary">
+            Report an Issue
+          </Link>
+        </nav>
         <p>
           Built by{" "}
           <a
