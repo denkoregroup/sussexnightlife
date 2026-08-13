@@ -7,6 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
@@ -49,8 +53,24 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* --------------------------------------------------------------------
+   * Editorial Nightlife brand tokens (Phase 1a)
+   * Dark-by-default, no light/dark toggle exists in this pass, so these
+   * live directly in :root rather than gated behind .dark.
+   * -------------------------------------------------------------------- */
+  --bg: oklch(0.16 0.014 260);
+  --surface: oklch(0.21 0.016 260);
+  --border: oklch(1 0 0 / 10%);
+  --text-primary: oklch(0.96 0.004 260);
+  --text-muted: oklch(0.72 0.012 260);
+  --text-faint: oklch(0.5 0.012 260);
+  --accent: oklch(0.72 0.19 32); /* fixed — the approved coral, do not reinterpret */
+
+  /* Feed the brand tokens into the existing shadcn token names so
+   * `body { @apply bg-background text-foreground }` and any future
+   * shadcn-generated component inherit the same palette for free. */
+  --background: var(--bg);
+  --foreground: var(--text-primary);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -61,10 +81,8 @@
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
@@ -126,5 +144,20 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  /* Glow is reserved for live/status signals (RightNowStrip's live dot,
+   * EventList's "live now" badge) plus Hero's one explicitly-named
+   * exception. Static only — no @keyframes, no pulsing, no JS-driven
+   * motion. Never apply as a decorative border on a static list item. */
+  .text-glow {
+    text-shadow: 0 0 20px color-mix(in oklch, var(--accent) 55%, transparent);
+  }
+  .glow {
+    box-shadow:
+      0 0 10px color-mix(in oklch, var(--accent) 55%, transparent),
+      0 0 24px color-mix(in oklch, var(--accent) 25%, transparent);
   }
 }
