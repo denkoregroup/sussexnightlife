@@ -1,6 +1,5 @@
 import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
-import { RightNowStrip } from "@/components/sections/RightNowStrip";
 import { EventList } from "@/components/sections/EventList";
 import { Footer } from "@/components/sections/Footer";
 import { mockEvents, mockVenues } from "@/lib/mock-events";
@@ -19,7 +18,6 @@ export default async function Home(props: PageProps<"/">) {
     <>
       <Nav region={region} />
       <Hero />
-      <RightNowStrip venues={venuesInRegion.slice(0, 4)} />
       <EventList events={eventsInRegion} venues={mockVenues} />
       <Footer />
     </>

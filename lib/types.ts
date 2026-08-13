@@ -47,14 +47,6 @@ export interface Event {
   recurrence_rule: string | null;
   last_verified_at: string | null;
   status: EventStatus;
-  /**
-   * Phase-1a mock-only presentational flag — NOT part of SPEC.md §6 and NOT
-   * in the SQL migration. spec §6's `status` enum has no "live" value (only
-   * published/pending_review/hidden), so "badge glows when live" can't mean
-   * the DB status column. This stands in for a real "happening right now"
-   * computation until the schema gains an end_time/duration field.
-   */
-  is_live_now?: boolean;
 }
 
 export interface AnalyticsEvent {

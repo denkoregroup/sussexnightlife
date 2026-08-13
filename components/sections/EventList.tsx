@@ -24,6 +24,7 @@ export function EventList({
       <ul className="flex flex-col gap-3">
         {events.map((event) => {
           const venue = venues.find((v) => v.venue_id === event.venue_id);
+          const isLive = isEventLiveToday(event.event_date);
           return (
             <li
               key={event.event_id}
@@ -45,7 +46,7 @@ export function EventList({
                 <span
                   className={cn(
                     "rounded-full border px-2.5 py-1 text-xs font-medium",
-                    event.is_live_now
+                    isLive
                       ? "glow border-accent/40 bg-accent/10 text-accent"
                       : "border-border bg-background text-text-muted"
                   )}
@@ -68,6 +69,22 @@ export function EventList({
       </ul>
     </section>
   );
+}
+
+// TODO(Phase 3+): This treats "live" as "event is today." Once ingestion is
+// real, add an `end_time` column to `events` (see spec.md §6) and switch this
+// to a true timestamp comparison (start_time <= now <= end_time).
+function isEventLiveToday(eventDate: string): boolean {
+  // "Today" must be computed in America/New_York, not server/UTC default —
+  // Vercel functions default to UTC, which would misclassify events near
+  // midnight Eastern. en-CA formats as YYYY-MM-DD, matching event_date.
+  const todayInEastern = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+  return eventDate === todayInEastern;
 }
 
 function formatEventTime(date: string, time: string) {

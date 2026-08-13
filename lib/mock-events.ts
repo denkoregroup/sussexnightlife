@@ -1,14 +1,12 @@
 import type { Event, Venue } from "@/lib/types";
 
-// Phase-1a mock data only — no Supabase reads yet (see app/page.tsx).
+// Mock data only — no Supabase reads yet (see app/page.tsx).
 //
-// Coastal venue names are real, public businesses; their `source_url`
-// domains below are best-effort plausible guesses, NOT verified against the
-// live sites. They must go through the real §5.1 Source Approval Matrix
-// before any live ingestion treats them as approved sources — this mock
-// data is exempt from that process, real ingestion is not.
-//
-// Western Sussex venue names are invented placeholders, not real businesses.
+// Coastal venue names are real, public businesses; Western Sussex venue
+// names are invented placeholders. Regardless of region, every
+// `source_url` below uses a fake `.example.com` subdomain — no source is
+// "real" until it clears the §5.1 Source Approval Matrix, and mock data
+// shouldn't imply otherwise by pointing at a venue's actual live domain.
 //
 // `recurrence_rule` grammar is unspecified by SPEC.md §6 — the plain strings
 // used below (e.g. "weekly:thursday") are provisional and should be
@@ -24,7 +22,7 @@ export const mockVenues: Venue[] = [
     region: "coastal",
     address: "2009 Highway One, Dewey Beach, DE",
     source_type: "static_html",
-    source_url: "https://thestarboard.com",
+    source_url: "https://starboard.example.com",
     link_status: "active",
     last_checked_at: "2026-08-12T09:00:00Z",
   },
@@ -35,7 +33,7 @@ export const mockVenues: Venue[] = [
     region: "coastal",
     address: "1807 Highway One, Dewey Beach, DE",
     source_type: "static_html",
-    source_url: "https://thebottleandcork.com",
+    source_url: "https://bottleandcork.example.com",
     link_status: "active",
     last_checked_at: "2026-08-12T09:00:00Z",
   },
@@ -46,7 +44,7 @@ export const mockVenues: Venue[] = [
     region: "coastal",
     address: "113 Dickinson St, Dewey Beach, DE",
     source_type: "static_html",
-    source_url: "https://rustyrudder.com",
+    source_url: "https://rustyrudder.example.com",
     link_status: "active",
     last_checked_at: "2026-08-11T09:00:00Z",
   },
@@ -57,7 +55,7 @@ export const mockVenues: Venue[] = [
     region: "coastal",
     address: "320 Rehoboth Ave, Rehoboth Beach, DE",
     source_type: "json_endpoint",
-    source_url: "https://dogfish.com",
+    source_url: "https://dogfishhead.example.com",
     link_status: "active",
     last_checked_at: "2026-08-12T09:00:00Z",
   },
@@ -68,7 +66,7 @@ export const mockVenues: Venue[] = [
     region: "coastal",
     address: "16739 Coastal Highway, Lewes, DE",
     source_type: "static_html",
-    source_url: "https://crookedhammockbrewery.com",
+    source_url: "https://crookedhammock.example.com",
     link_status: "active",
     last_checked_at: "2026-08-11T09:00:00Z",
   },
@@ -129,11 +127,10 @@ export const mockEvents: Event[] = [
     category: "dj",
     cover_charge: null,
     summary: "DJ set on the outdoor deck, open to all ages until 9pm.",
-    source_url: "https://thestarboard.com/events",
+    source_url: "https://starboard.example.com/events",
     recurrence_rule: null,
     last_verified_at: "2026-08-12T09:00:00Z",
     status: "published",
-    is_live_now: true,
   },
   {
     event_id: "3c9f2a10-0000-4000-8000-000000000002",
@@ -144,7 +141,7 @@ export const mockEvents: Event[] = [
     category: "live_music",
     cover_charge: 10,
     summary: "Local rock/beach cover band, main stage, doors at 7pm.",
-    source_url: "https://thebottleandcork.com/calendar",
+    source_url: "https://bottleandcork.example.com/calendar",
     recurrence_rule: null,
     last_verified_at: "2026-08-12T09:00:00Z",
     status: "published",
@@ -158,7 +155,7 @@ export const mockEvents: Event[] = [
     category: "happy_hour",
     cover_charge: null,
     summary: "Discounted drinks on the deck, riverside view, no cover.",
-    source_url: "https://rustyrudder.com/happy-hour",
+    source_url: "https://rustyrudder.example.com/happy-hour",
     recurrence_rule: "daily",
     last_verified_at: "2026-08-11T09:00:00Z",
     status: "published",
@@ -172,7 +169,7 @@ export const mockEvents: Event[] = [
     category: "trivia",
     cover_charge: null,
     summary: "Team trivia in the brewpub, prizes for top three teams.",
-    source_url: "https://dogfish.com/rehoboth/events",
+    source_url: "https://dogfishhead.example.com/rehoboth/events",
     recurrence_rule: "weekly:thursday",
     last_verified_at: "2026-08-12T09:00:00Z",
     status: "published",
@@ -186,7 +183,7 @@ export const mockEvents: Event[] = [
     category: "karaoke",
     cover_charge: null,
     summary: "Karaoke in the taproom, sign-ups start at 7:30pm.",
-    source_url: "https://crookedhammockbrewery.com/lewes/events",
+    source_url: "https://crookedhammock.example.com/lewes/events",
     recurrence_rule: null,
     last_verified_at: "2026-08-11T09:00:00Z",
     status: "published",
