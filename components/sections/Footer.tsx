@@ -7,7 +7,7 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="border-t border-border py-8">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 text-xs text-text-faint">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 text-xs text-text-faint">
         <p>
           Event details are sourced from public venue postings. All events
           are subject to change — verify with the venue before attending.

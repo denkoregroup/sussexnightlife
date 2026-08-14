@@ -3,22 +3,16 @@ import { Hero } from "@/components/sections/Hero";
 import { EventList } from "@/components/sections/EventList";
 import { Footer } from "@/components/sections/Footer";
 import { mockEvents, mockVenues } from "@/lib/mock-events";
-import type { Region } from "@/lib/types";
 
-export default async function Home(props: PageProps<"/">) {
-  const { region: rawRegion } = await props.searchParams;
-  const region: Region = rawRegion === "western_sussex" ? "western_sussex" : "coastal";
-
-  const venuesInRegion = mockVenues.filter((v) => v.region === region);
-  const eventsInRegion = mockEvents.filter(
-    (event) => venuesInRegion.find((v) => v.venue_id === event.venue_id) !== undefined
-  );
-
+// Both regions render in one chronologically-sorted list by default —
+// EventList's own filter chips (All / Coastal / Western Sussex) narrow it
+// client-side, so the homepage no longer branches on a ?region= param.
+export default function Home() {
   return (
     <>
-      <Nav region={region} />
+      <Nav />
       <Hero />
-      <EventList events={eventsInRegion} venues={mockVenues} />
+      <EventList events={mockEvents} venues={mockVenues} />
       <Footer />
     </>
   );

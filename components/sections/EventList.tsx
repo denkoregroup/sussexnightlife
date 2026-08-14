@@ -1,8 +1,11 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { Event, Venue } from "@/lib/types";
+import type { Event, Region, Venue } from "@/lib/types";
 
 const CATEGORY_LABEL: Record<Event["category"], string> = {
   live_music: "Live Music",
@@ -13,6 +16,14 @@ const CATEGORY_LABEL: Record<Event["category"], string> = {
   community: "Community",
 };
 
+type RegionFilter = Region | "all";
+
+const REGION_FILTERS: { value: RegionFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "coastal", label: "Coastal" },
+  { value: "western_sussex", label: "Western Sussex" },
+];
+
 export function EventList({
   events,
   venues,
@@ -20,10 +31,55 @@ export function EventList({
   events: Event[];
   venues: Venue[];
 }) {
+  const [filter, setFilter] = useState<RegionFilter>("all");
+
+  // Merge/sort once regardless of filter — filtering below just narrows the
+  // same chronological list, it never re-sorts or re-concatenates.
+  const sortedEvents = useMemo(
+    () =>
+      [...events].sort((a, b) =>
+        a.event_date !== b.event_date
+          ? a.event_date.localeCompare(b.event_date)
+          : a.start_time.localeCompare(b.start_time)
+      ),
+    [events]
+  );
+
+  const visibleEvents = useMemo(() => {
+    if (filter === "all") return sortedEvents;
+    return sortedEvents.filter((event) => {
+      const venue = venues.find((v) => v.venue_id === event.venue_id);
+      return venue?.region === filter;
+    });
+  }, [sortedEvents, venues, filter]);
+
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
+    <section className="mx-auto w-full max-w-5xl px-4 py-12">
+      <div
+        role="group"
+        aria-label="Filter by region"
+        className="mb-4 flex items-center gap-2"
+      >
+        {REGION_FILTERS.map(({ value, label }) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setFilter(value)}
+            aria-pressed={filter === value}
+            className={cn(
+              "rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
+              filter === value
+                ? "glow border-accent/40 bg-accent/10 text-accent"
+                : "border-border bg-background text-text-muted hover:text-text-primary"
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <ul className="flex flex-col gap-3">
-        {events.map((event) => {
+        {visibleEvents.map((event) => {
           const venue = venues.find((v) => v.venue_id === event.venue_id);
           const isLive = isEventLiveToday(event.event_date);
           return (
