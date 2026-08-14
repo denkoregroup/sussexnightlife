@@ -5,7 +5,7 @@ import Link from "next/link";
 export function Nav() {
   return (
     <header className="border-b border-border">
-      <div className="mx-auto flex max-w-5xl items-center px-4 py-4">
+      <div className="mx-auto flex w-full max-w-5xl items-center px-4 py-4">
         <Link
           href="/"
           className="text-sm font-semibold tracking-wide text-text-primary"

@@ -54,7 +54,7 @@ export function EventList({
   }, [sortedEvents, venues, filter]);
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
+    <section className="mx-auto w-full max-w-5xl px-4 py-12">
       <div
         role="group"
         aria-label="Filter by region"

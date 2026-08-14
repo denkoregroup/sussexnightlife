@@ -18,7 +18,7 @@ export function LegalPage({
   return (
     <>
       <Nav />
-      <article className="mx-auto max-w-2xl px-4 py-12 sm:py-16">
+      <article className="mx-auto w-full max-w-2xl px-4 py-12 sm:py-16">
         <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
           {title}
         </h1>

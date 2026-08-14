@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <section className="mx-auto max-w-5xl px-4 py-16 sm:py-24">
+    <section className="mx-auto w-full max-w-5xl px-4 py-16 sm:py-24">
       <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-text-primary sm:text-5xl">
         See what&apos;s{" "}
         <span className="text-glow text-accent">live</span> across Sussex
