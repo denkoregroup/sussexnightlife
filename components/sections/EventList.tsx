@@ -37,7 +37,10 @@ export function EventList({
                     {formatEventTime(event.event_date, event.start_time)}
                   </time>
                   <span aria-hidden>·</span>
-                  <span>{venue?.name ?? "Unknown venue"}</span>
+                  <span className="text-text-muted">
+                    {venue?.name ?? "Unknown venue"}
+                    {venue?.town ? ` · ${venue.town}` : null}
+                  </span>
                 </div>
                 <p className="text-sm text-text-primary">{event.title}</p>
                 <p className="text-sm text-text-muted">{event.summary}</p>
