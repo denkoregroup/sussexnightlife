@@ -78,77 +78,61 @@ export function EventList({
         ))}
       </div>
 
-      {/* Fixed, viewport-relative height — regardless of how many events a
-          region filter leaves, this panel stays the same size and scrolls
-          internally, so switching filters doesn't reflow the footer/rest of
-          the page underneath it. */}
-      <div className="h-[60vh] min-h-[420px] overflow-y-auto pr-1">
-        {visibleEvents.length === 0 ? (
-          <p className="py-12 text-center text-sm text-text-faint">
-            No events match this filter.
-          </p>
-        ) : (
-          <ul className="flex flex-col gap-3">
-            {visibleEvents.map((event) => {
-              const venue = venues.find((v) => v.venue_id === event.venue_id);
-              const isLive = isEventLiveToday(event.event_date);
-              return (
-                <li
-                  key={event.event_id}
-                  className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2 text-xs text-text-faint">
-                      <time
-                        dateTime={`${event.event_date}T${event.start_time}`}
-                      >
-                        {formatEventTime(event.event_date, event.start_time)}
-                      </time>
-                      <span aria-hidden>·</span>
-                      <span className="text-text-muted">
-                        {venue?.name ?? "Unknown venue"}
-                        {venue?.town ? ` · ${venue.town}` : null}
-                      </span>
-                    </div>
-                    <p className="text-sm text-text-primary">{event.title}</p>
-                    <p className="text-sm text-text-muted">
-                      {event.summary}
-                    </p>
-                  </div>
+      <ul className="flex flex-col gap-3">
+        {visibleEvents.map((event) => {
+          const venue = venues.find((v) => v.venue_id === event.venue_id);
+          const isLive = isEventLiveToday(event.event_date);
+          return (
+            <li
+              key={event.event_id}
+              className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 text-xs text-text-faint">
+                  <time dateTime={`${event.event_date}T${event.start_time}`}>
+                    {formatEventTime(event.event_date, event.start_time)}
+                  </time>
+                  <span aria-hidden>·</span>
+                  <span className="text-text-muted">
+                    {venue?.name ?? "Unknown venue"}
+                    {venue?.town ? ` · ${venue.town}` : null}
+                  </span>
+                </div>
+                <p className="text-sm text-text-primary">{event.title}</p>
+                <p className="text-sm text-text-muted">{event.summary}</p>
+              </div>
 
-                  <div className="flex items-center gap-3 sm:flex-col sm:items-end">
-                    <span
-                      className={cn(
-                        "rounded-full border px-2.5 py-1 text-xs font-medium",
-                        isLive
-                          ? "glow border-accent/40 bg-accent/10 text-accent"
-                          : "border-border bg-background text-text-muted"
-                      )}
-                    >
-                      {CATEGORY_LABEL[event.category]}
-                    </span>
-                    <a
-                      href={event.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-text-faint hover:text-text-primary"
-                    >
-                      Source: {venue?.name ?? "venue"}
-                      <ExternalLink aria-hidden className="size-3" />
-                    </a>
-                    <Link
-                      href={`/report?event=${encodeURIComponent(event.title)}`}
-                      className="text-xs text-text-faint underline underline-offset-2 hover:text-text-primary"
-                    >
-                      Report incorrect info
-                    </Link>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
+              <div className="flex items-center gap-3 sm:flex-col sm:items-end">
+                <span
+                  className={cn(
+                    "rounded-full border px-2.5 py-1 text-xs font-medium",
+                    isLive
+                      ? "glow border-accent/40 bg-accent/10 text-accent"
+                      : "border-border bg-background text-text-muted"
+                  )}
+                >
+                  {CATEGORY_LABEL[event.category]}
+                </span>
+                <a
+                  href={event.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-text-faint hover:text-text-primary"
+                >
+                  Source: {venue?.name ?? "venue"}
+                  <ExternalLink aria-hidden className="size-3" />
+                </a>
+                <Link
+                  href={`/report?event=${encodeURIComponent(event.title)}`}
+                  className="text-xs text-text-faint underline underline-offset-2 hover:text-text-primary"
+                >
+                  Report incorrect info
+                </Link>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
