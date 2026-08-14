@@ -66,6 +66,10 @@
   --text-faint: oklch(0.5 0.012 260);
   --accent: oklch(0.72 0.19 32); /* fixed — the approved coral, do not reinterpret */
 
+  /* Dark-by-default with no toggle (see above) — tell the browser so native
+   * scrollbars/form controls render dark instead of defaulting to light. */
+  color-scheme: dark;
+
   /* Feed the brand tokens into the existing shadcn token names so
    * `body { @apply bg-background text-foreground }` and any future
    * shadcn-generated component inherit the same palette for free. */
